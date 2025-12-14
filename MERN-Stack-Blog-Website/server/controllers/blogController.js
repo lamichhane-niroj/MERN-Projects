@@ -46,7 +46,7 @@ export const addBlog = async (req, res) => {
 export const getAllBlogs = async (req, res) => {
   try {
     const blogs = await Blog.find({ isPublished: true });
-    res.json({ sucess: true, blogs });
+    res.json({ success: true, blogs });
   } catch (err) {
     return res.json({ success: false, message: err.message });
   }
@@ -59,10 +59,10 @@ export const getBlogById = async (req, res) => {
     const blog = await Blog.findById(blogId);
 
     if (!blog) {
-      res.json({ sucess: false, message: "Blog not found" });
+      res.json({ success: false, message: "Blog not found" });
     }
 
-    res.json({ sucess: true, blog });
+    res.json({ success: true, blog });
   } catch (err) {
     return res.json({ success: false, message: err.message });
   }
@@ -75,9 +75,9 @@ export const deleteBlogById = async (req, res) => {
     const blog = await Blog.findByIdAndDelete(blogId);
 
     // delete all comments associated with the blog
-    await Comment.deleteMany({blog: id});
+    await Comment.deleteMany({ blog: id });
 
-    res.json({ sucess: true, message: "Blog deleted successfully" });
+    res.json({ success: true, message: "Blog deleted successfully" });
   } catch (err) {
     return res.json({ success: false, message: err.message });
   }
@@ -107,7 +107,7 @@ export const addComment = async (req, res) => {
 
 export const getBlogComments = async (req, res) => {
   try {
-    const { blogId } = req.body;
+    const { blogId } = req.params;
     const comments = await Comment.find({
       blog: blogId,
       isApproved: true,
